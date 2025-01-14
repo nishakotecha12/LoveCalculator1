@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            text-align: center;
+            padding: 50px;
+            overflow: hidden;
+            color: #333;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e91e63;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4081;
+            transform: rotate(45deg);
+            animation: floatUp 4s infinite;
+            opacity: 0;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4081;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: -10px;
+            top: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-600px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Love Calculator</h1>
+        <p>Find your love percentage!</p>
+        <input type="text" id="yourName" placeholder="Enter your name">
+        <input type="text" id="crushName" placeholder="Enter your crush's name">
+        <button onclick="areYouReady()">Calculate Love</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function areYouReady() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>Are you readyyyy? 🤩</p>
+                <button onclick="calculateLove('yes')">Yes</button>
+                <button id="noButton" onmouseover="moveNoButton()">No</button>
+            `;
+        }
+
+        function moveNoButton() {
+            const noButton = document.getElementById('noButton');
+            noButton.style.position = 'absolute';
+            noButton.style.top = Math.random() * 80 + 'vh';
+            noButton.style.left = Math.random() * 80 + 'vw';
+        }
+
+        function calculateLove(answer) {
+            const resultDiv = document.getElementById('result');
+
+            if (answer === 'no') {
+                resultDiv.innerHTML = '<p>No worries, take your time! ❤️</p>';
+                return;
+            }
+
+            const yourName = document.getElementById('yourName').value;
+            const crushName = document.getElementById('crushName').value;
+
+            if (!yourName || !crushName) {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter both names!</p>';
+                return;
+            }
+
+            const lovePercentage = Math.floor(Math.random() * 101); // Random percentage between 0 and 100
+            const tips = [
+                "Communication is key!",
+                "Spend quality time together.",
+                "Be honest and supportive.",
+                "Small gestures matter!",
+                "Respect each other's individuality.",
+                "Be patient and understanding.",
+                "Express your feelings openly.",
+                "Keep the spark alive with surprises.",
+                "Celebrate each other's achievements.",
+                "Never stop learning about each other."
+            ];
+
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+
+            const audio = document.getElementById('congratsAudio');
+            audio.play();
+
+            resultDiv.innerHTML = `
+                <p><strong>${yourName}</strong> and <strong>${crushName}</strong>, your love percentage is <strong>${lovePercentage}%</strong> 🎉.</p>
+                <p>Tip: ${randomTip}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
