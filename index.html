@@ -59,46 +59,6 @@
             margin-top: 20px;
             font-size: 18px;
         }
-
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ff4081;
-            transform: rotate(45deg);
-            animation: floatUp 4s infinite;
-            opacity: 0;
-        }
-
-        .heart:before, .heart:after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ff4081;
-            border-radius: 50%;
-        }
-
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-
-        .heart:after {
-            left: -10px;
-            top: 0;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-600px) rotate(45deg);
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -111,21 +71,9 @@
         <div class="result" id="result"></div>
     </div>
 
+    <audio id="congratsAudio" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-
-        setInterval(createHeart, 300);
-
         function areYouReady() {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
@@ -158,18 +106,13 @@
                 return;
             }
 
-            const lovePercentage = Math.floor(Math.random() * 101); // Random percentage between 0 and 100
+            const lovePercentage = Math.floor(Math.random() * 101);
             const tips = [
                 "Communication is key!",
                 "Spend quality time together.",
                 "Be honest and supportive.",
                 "Small gestures matter!",
-                "Respect each other's individuality.",
-                "Be patient and understanding.",
-                "Express your feelings openly.",
-                "Keep the spark alive with surprises.",
-                "Celebrate each other's achievements.",
-                "Never stop learning about each other."
+                "Respect each other's individuality."
             ];
 
             const randomTip = tips[Math.floor(Math.random() * tips.length)];
